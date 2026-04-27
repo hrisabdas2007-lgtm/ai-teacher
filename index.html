@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>AI TEACHER</title>
+
+<style>
+
+body{
+margin:0;
+font-family:Arial, sans-serif;
+background:#f2f6ff;
+}
+
+/* NAVBAR */
+
+nav{
+background:#1e3a8a;
+color:white;
+padding:15px;
+font-size:22px;
+text-align:center;
+font-weight:bold;
+}
+
+/* HERO SECTION */
+
+.hero{
+text-align:center;
+padding:50px 20px;
+}
+
+.hero h1{
+font-size:40px;
+color:#1e3a8a;
+}
+
+.hero p{
+color:#555;
+}
+
+/* MAIN BOX */
+
+.container{
+max-width:700px;
+margin:auto;
+background:white;
+padding:25px;
+border-radius:10px;
+box-shadow:0 0 15px rgba(0,0,0,0.1);
+}
+
+textarea{
+width:100%;
+height:140px;
+padding:12px;
+font-size:16px;
+margin-top:10px;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+padding:12px 20px;
+font-size:16px;
+margin-top:15px;
+cursor:pointer;
+border-radius:6px;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+#answer{
+margin-top:20px;
+background:#eef2ff;
+padding:15px;
+border-radius:8px;
+white-space:pre-wrap;
+min-height:100px;
+}
+
+/* FOOTER */
+
+footer{
+margin-top:40px;
+background:#1e3a8a;
+color:white;
+text-align:center;
+padding:15px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<nav>
+🤖 AI TEACHER
+</nav>
+
+<section class="hero">
+<h1>Your Free AI Study Assistant</h1>
+<p>Ask any doubt and get instant explanation</p>
+</section>
+
+<div class="container">
+
+<h3>Enter Your Question</h3>
+
+<textarea id="question"
+placeholder="Type your doubt here..."></textarea>
+
+<br>
+
+<button onclick="solveDoubt()">Solve My Doubt</button>
+
+<div id="answer">
+AI answer will appear here...
+</div>
+
+</div>
+
+<footer>
+© 2026 AI TEACHER | Made for Students
+</footer>
+
+<script>
+
+async function solveDoubt(){
+
+const question =
+document.getElementById("question").value;
+
+if(question===""){
+alert("Please enter a question");
+return;
+}
+
+document.getElementById("answer").innerText =
+"AI is thinking... 🤖";
+
+const response = await fetch(
+"https://openrouter.ai/api/v1/chat/completions",
+{
+method:"POST",
+headers:{
+"Authorization":"Bearer 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",
+"Content-Type":"application/json"
+},
+body:JSON.stringify({
+model:"openai/gpt-3.5-turbo",
+messages:[
+{role:"user",content:question}
+]
+})
+});
+
+const data = await response.json();
+
+document.getElementById("answer").innerText =
+data.choices[0].message.content;
+}
+
+</script>
+
+</body>
+</html>
